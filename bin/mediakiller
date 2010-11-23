@@ -1,0 +1,15 @@
+#!/usr/bin/jruby
+
+begin
+  require 'mediakiller'
+rescue LoadError
+  $: << File.join(File.dirname(File.dirname(__FILE__)), "lib")
+  require 'mediakiller'
+end
+
+if ARGV.size != 2
+  STDERR.puts "usage: mediakiller <format> <file>"
+  exit 1
+end
+
+puts MediaKiller.new(ARGV[0].intern).convert(File.read(ARGV[1]))
